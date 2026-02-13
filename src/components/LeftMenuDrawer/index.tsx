@@ -28,6 +28,7 @@ import {
   LogOut 
 } from 'lucide-react-native';
 import { colors, typography, spacing } from '../../theme';
+import AgentsPanel from './AgentsPanel';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const DRAWER_WIDTH = 200; // Fixed width to match PWA
@@ -52,6 +53,7 @@ interface LeftMenuDrawerProps {
   isOpen: boolean;
   onClose: () => void;
   selectedAgent?: string;
+  onSelectAgent?: (agent: string) => void;
   onMenuItemPress?: (item: string) => void;
   activeSubMenu?: string | null;
 }
@@ -60,10 +62,22 @@ export default function LeftMenuDrawer({
   isOpen, 
   onClose, 
   selectedAgent = 'ARYA',
+  onSelectAgent,
   onMenuItemPress,
-  activeSubMenu = null 
+  activeSubMenu: controlledActiveSubMenu = null 
 }: LeftMenuDrawerProps) {
+  const [localActiveSubMenu, setLocalActiveSubMenu] = React.useState<string | null>(null);
   const translateX = useSharedValue(-DRAWER_WIDTH);
+
+  // Use controlled or local state
+  const activeSubMenu = controlledActiveSubMenu !== null ? controlledActiveSubMenu : localActiveSubMenu;
+  
+  const handleMenuItemClick = (itemId: string) => {
+    // Toggle submenu: close if already open, open if closed
+    const newActiveSubMenu = activeSubMenu === itemId ? null : itemId;
+    setLocalActiveSubMenu(newActiveSubMenu);
+    onMenuItemPress?.(itemId);
+  };
 
   // Animate drawer open/close
   React.useEffect(() => {
@@ -140,7 +154,7 @@ export default function LeftMenuDrawer({
               <TouchableOpacity
                 key={item.id}
                 style={styles.menuItem}
-                onPress={() => onMenuItemPress?.(item.id)}
+                onPress={() => handleMenuItemClick(item.id)}
               >
                 <View style={styles.menuItemLeft}>
                   <item.icon 
@@ -182,6 +196,17 @@ export default function LeftMenuDrawer({
           </View>
         </Animated.View>
       </GestureDetector>
+
+      {/* Agents Panel */}
+      <AgentsPanel
+        isOpen={activeSubMenu === 'agents'}
+        selectedAgent={selectedAgent}
+        onSelectAgent={(agent) => {
+          onSelectAgent?.(agent);
+          onClose();
+        }}
+        onClose={onClose}
+      />
     </>
   );
 }

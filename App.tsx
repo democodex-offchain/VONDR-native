@@ -109,6 +109,7 @@ export default function App() {
             onClose={() => setIsLeftMenuOpen(false)}
             onMenuItemPress={handleMenuItemPress}
             selectedAgent={selectedAgent}
+            onSelectAgent={handleSelectAgent}
           />
 
           {/* Right Drawer */}
