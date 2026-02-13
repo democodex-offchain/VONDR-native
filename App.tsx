@@ -19,6 +19,7 @@ import AgentSelectorDrawer from './src/components/AgentSelectorDrawer';
 import FloatingMenus from './src/components/FloatingMenus';
 import MenuItemPage from './src/components/MenuItemPage';
 import SessionDetailsPage from './src/components/SessionDetailsPage';
+import BrandPage from './src/components/BrandPage';
 
 export default function App() {
   // Menu state
@@ -30,6 +31,7 @@ export default function App() {
   // Navigation state
   const [currentPage, setCurrentPage] = useState<string | null>(null);
   const [selectedSession, setSelectedSession] = useState<any | null>(null);
+  const [isBrandPageOpen, setIsBrandPageOpen] = useState(false);
   
   // Agent state
   const [selectedAgent, setSelectedAgent] = useState<string>('XEO');
@@ -116,6 +118,10 @@ export default function App() {
               setSelectedSession(session);
               setIsLeftMenuOpen(false);
             }}
+            onOpenBrand={() => {
+              setIsBrandPageOpen(true);
+              setIsLeftMenuOpen(false);
+            }}
           />
 
           {/* Right Drawer */}
@@ -141,6 +147,13 @@ export default function App() {
             <SessionDetailsPage
               session={selectedSession}
               onClose={() => setSelectedSession(null)}
+            />
+          )}
+
+          {/* Brand Page */}
+          {isBrandPageOpen && (
+            <BrandPage
+              onClose={() => setIsBrandPageOpen(false)}
             />
           )}
         </MainCanvas>

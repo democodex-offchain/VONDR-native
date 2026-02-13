@@ -60,6 +60,7 @@ interface LeftMenuDrawerProps {
   onMenuItemPress?: (item: string) => void;
   activeSubMenu?: string | null;
   onSelectSession?: (session: any) => void;
+  onOpenBrand?: () => void;
 }
 
 export default function LeftMenuDrawer({ 
@@ -69,7 +70,8 @@ export default function LeftMenuDrawer({
   onSelectAgent,
   onMenuItemPress,
   activeSubMenu: controlledActiveSubMenu = null,
-  onSelectSession 
+  onSelectSession,
+  onOpenBrand
 }: LeftMenuDrawerProps) {
   const [localActiveSubMenu, setLocalActiveSubMenu] = React.useState<string | null>(null);
   const translateX = useSharedValue(-DRAWER_WIDTH);
@@ -228,6 +230,7 @@ export default function LeftMenuDrawer({
       <UIKitPanel
         isOpen={activeSubMenu === 'ui-kit'}
         onClose={onClose}
+        onOpenBrand={onOpenBrand}
       />
     </>
   );

@@ -24,9 +24,10 @@ const PANEL_WIDTH = SCREEN_WIDTH - DRAWER_WIDTH; // Fill remaining screen width 
 interface UIKitPanelProps {
   isOpen: boolean;
   onClose: () => void;
+  onOpenBrand?: () => void;
 }
 
-export default function UIKitPanel({ isOpen, onClose }: UIKitPanelProps) {
+export default function UIKitPanel({ isOpen, onClose, onOpenBrand }: UIKitPanelProps) {
   const translateX = useSharedValue(-PANEL_WIDTH);
   const [shouldRender, setShouldRender] = React.useState(false);
   const insets = useSafeAreaInsets();
@@ -57,7 +58,10 @@ export default function UIKitPanel({ isOpen, onClose }: UIKitPanelProps) {
 
   // Page navigation handlers
   const handleBrandClick = () => {
-    Alert.alert('Brand', 'Brand page coming soon');
+    if (onOpenBrand) {
+      onOpenBrand();
+      onClose(); // Close the menu after opening the page
+    }
   };
 
   const handleAgentStreamClick = () => {
