@@ -56,7 +56,7 @@ export default function BrandPage({ onClose }: BrandPageProps) {
   return (
     <View style={styles.container}>
       {/* Header */}
-      <View style={[styles.header, { paddingTop: insets.top }]}>
+      <View style={styles.header}>
         <TouchableOpacity onPress={onClose} style={styles.backButton}>
           <ArrowLeft size={20} color={colors.text.secondary} />
         </TouchableOpacity>
@@ -170,7 +170,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: spacing.lg,
-    paddingVertical: spacing.md,
+    paddingTop: spacing.xs,
+    paddingBottom: spacing.md,
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(255, 255, 255, 0.05)',
     backgroundColor: 'rgba(24, 24, 27, 0.5)', // zinc-900 with 50% opacity
