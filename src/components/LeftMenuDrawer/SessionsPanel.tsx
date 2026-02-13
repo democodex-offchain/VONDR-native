@@ -110,7 +110,7 @@ export default function SessionsPanel({
   return (
     <Animated.View style={[styles.panel, panelStyle]}>
       {/* Header */}
-      <View style={styles.header}>
+      <View style={[styles.header, { paddingTop: insets.top + spacing.sm }]}>
         <Text style={styles.headerTitle}>SESSIONS</Text>
       </View>
 
@@ -198,7 +198,6 @@ const styles = StyleSheet.create({
   },
   header: {
     paddingHorizontal: spacing.lg,
-    paddingTop: spacing.xs,
     paddingBottom: spacing.md,
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(255, 255, 255, 0.05)',

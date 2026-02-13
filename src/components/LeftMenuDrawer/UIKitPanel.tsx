@@ -127,7 +127,7 @@ export default function UIKitPanel({ isOpen, onClose, onOpenBrand }: UIKitPanelP
 
   return (
     <Animated.View style={[styles.panel, panelStyle]}>
-      <View style={styles.header}>
+      <View style={[styles.header, { paddingTop: insets.top + spacing.sm }]}>
         <Text style={styles.headerTitle}>UI KIT</Text>
       </View>
       <ScrollView
@@ -232,7 +232,6 @@ const styles = StyleSheet.create({
   },
   header: {
     paddingHorizontal: spacing.lg,
-    paddingTop: spacing.xs,
     paddingBottom: spacing.lg,
   },
   headerTitle: {
