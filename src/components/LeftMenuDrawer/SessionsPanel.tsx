@@ -110,7 +110,7 @@ export default function SessionsPanel({
   return (
     <Animated.View style={[styles.panel, panelStyle]}>
       {/* Header */}
-      <View style={[styles.header, { paddingTop: insets.top + spacing.xs }]}>
+      <View style={[styles.header, { paddingTop: insets.top }]}>
         <Text style={styles.headerTitle}>SESSIONS</Text>
       </View>
 

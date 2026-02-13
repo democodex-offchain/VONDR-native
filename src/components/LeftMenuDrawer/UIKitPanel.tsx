@@ -126,7 +126,10 @@ export default function UIKitPanel({ isOpen, onClose, onOpenBrand }: UIKitPanelP
   if (!shouldRender) return null;
 
   return (
-    <Animated.View style={[styles.panel, panelStyle, { paddingTop: insets.top }]}>
+    <Animated.View style={[styles.panel, panelStyle]}>
+      <View style={[styles.header, { paddingTop: insets.top }]}>
+        <Text style={styles.headerTitle}>UI KIT</Text>
+      </View>
       <ScrollView
         style={styles.scrollView}
         contentContainerStyle={styles.content}
@@ -226,6 +229,17 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     elevation: 10,
     zIndex: 50,
+  },
+  header: {
+    paddingHorizontal: spacing.lg,
+    paddingBottom: spacing.lg,
+  },
+  headerTitle: {
+    fontFamily: 'Courier New',
+    fontSize: 10,
+    textTransform: 'uppercase',
+    letterSpacing: 2.5,
+    color: colors.text.secondary,
   },
   scrollView: {
     flex: 1,

@@ -56,7 +56,7 @@ export default function BrandPage({ onClose }: BrandPageProps) {
   return (
     <View style={styles.container}>
       {/* Header */}
-      <View style={[styles.header, { paddingTop: insets.top + spacing.sm }]}>
+      <View style={[styles.header, { paddingTop: insets.top }]}>
         <TouchableOpacity onPress={onClose} style={styles.backButton}>
           <ArrowLeft size={20} color={colors.text.secondary} />
         </TouchableOpacity>

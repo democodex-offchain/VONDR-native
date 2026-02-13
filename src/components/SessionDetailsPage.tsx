@@ -102,7 +102,7 @@ export default function SessionDetailsPage({ session, onClose }: SessionDetailsP
       keyboardVerticalOffset={0}
     >
       {/* Header */}
-      <View style={[styles.header, { paddingTop: insets.top + spacing.sm }]}>
+      <View style={[styles.header, { paddingTop: insets.top }]}>
         <View style={styles.headerContent}>
           {/* Back Button */}
           <TouchableOpacity onPress={onClose} style={styles.backButton}>
