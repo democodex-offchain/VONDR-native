@@ -19,6 +19,7 @@ import Animated, {
   runOnJS,
 } from 'react-native-reanimated';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
+import { LinearGradient } from 'expo-linear-gradient';
 import { colors, spacing } from '../theme';
 
 const ORB_SIZE = 120;
@@ -137,6 +138,16 @@ export default function CentralOrb({ onPullDown, onPullLeft, onPullRight }: Cent
       {/* Outer glow ring */}
       <Animated.View style={[styles.glowRing, glowStyle, pulseStyle]} />
       
+      {/* Gradient border ring (active state) */}
+      {isActive && (
+        <LinearGradient
+          colors={[colors.orb.pulse, colors.orb.void, colors.orb.core, colors.orb.energy]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          style={styles.gradientRing}
+        />
+      )}
+      
       {/* Draggable orb */}
       <GestureDetector gesture={composed}>
         <Animated.View style={[styles.orb, orbStyle]}>
@@ -165,6 +176,12 @@ const styles = StyleSheet.create({
     width: ORB_SIZE + 40,
     height: ORB_SIZE + 40,
     borderRadius: (ORB_SIZE + 40) / 2,
+  },
+  gradientRing: {
+    position: 'absolute',
+    width: ORB_SIZE + 8,
+    height: ORB_SIZE + 8,
+    borderRadius: (ORB_SIZE + 8) / 2,
   },
   orb: {
     width: ORB_SIZE,
