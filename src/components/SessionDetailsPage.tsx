@@ -174,28 +174,36 @@ export default function SessionDetailsPage({ session, onClose }: SessionDetailsP
           <View
             key={message.id}
             style={[
-              styles.messageContainer,
-              message.type === 'user' ? styles.userMessage : styles.agentMessage
+              styles.messageWrapper,
+              message.type === 'user' ? styles.userMessageWrapper : styles.agentMessageWrapper
             ]}
           >
-            {/* Message Label */}
-            <Text style={styles.messageLabel}>
-              {message.type === 'user' ? 'YOU' : session.agentName.toUpperCase()}
-            </Text>
+            {/* Message Bubble */}
+            <View
+              style={[
+                styles.messageBubble,
+                message.type === 'user' ? styles.userMessageBubble : styles.agentMessageBubble
+              ]}
+            >
+              <Text style={styles.messageText}>{message.content}</Text>
+            </View>
 
-            {/* Message Content */}
-            <Text style={styles.messageText}>{message.content}</Text>
-
-            {/* Agent Message Metadata */}
-            {message.type === 'agent' && (message.tokens || message.cost) && (
-              <View style={styles.messageMetadata}>
+            {/* Metadata (tokens + cost) */}
+            {(message.tokens || message.cost) && (
+              <View style={[
+                styles.messageMetadata,
+                message.type === 'user' ? styles.userMessageMetadata : styles.agentMessageMetadata
+              ]}>
                 {message.tokens && (
                   <Text style={styles.messageMetadataText}>
                     {message.tokens.toLocaleString()} tokens
                   </Text>
                 )}
+                {message.tokens && message.cost && (
+                  <View style={styles.messageMetadataDivider} />
+                )}
                 {message.cost && (
-                  <Text style={[styles.messageMetadataText, message.tokens && styles.messageMetadataBordered]}>
+                  <Text style={styles.messageMetadataText}>
                     {message.cost}
                   </Text>
                 )}
@@ -316,29 +324,30 @@ const styles = StyleSheet.create({
     padding: spacing.lg,
     gap: spacing.xl,
   },
-  messageContainer: {
-    backgroundColor: 'rgba(39, 39, 42, 0.5)', // zinc-800 with transparency
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.1)',
-    borderRadius: 12,
-    padding: spacing.md,
+  messageWrapper: {
     marginBottom: spacing.lg,
   },
-  userMessage: {
-    alignSelf: 'flex-start',
+  userMessageWrapper: {
+    alignItems: 'flex-end',
+  },
+  agentMessageWrapper: {
+    alignItems: 'flex-start',
+  },
+  messageBubble: {
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.1)',
+    borderRadius: 16,
+    padding: spacing.md,
+  },
+  userMessageBubble: {
+    backgroundColor: 'rgba(39, 39, 42, 1)', // zinc-800 solid
+    maxWidth: '80%',
+    borderTopRightRadius: 2, // Pointed corner for user (top-right)
+  },
+  agentMessageBubble: {
+    backgroundColor: 'rgba(39, 39, 42, 1)', // zinc-800 solid
     maxWidth: '85%',
-  },
-  agentMessage: {
-    alignSelf: 'flex-start',
-    maxWidth: '100%',
-  },
-  messageLabel: {
-    fontFamily: 'Courier New',
-    fontSize: 9,
-    textTransform: 'uppercase',
-    letterSpacing: 2,
-    color: colors.text.secondary,
-    marginBottom: spacing.xs,
+    borderTopLeftRadius: 2, // Pointed corner for agent (top-left)
   },
   messageText: {
     fontFamily: 'System',
@@ -349,20 +358,25 @@ const styles = StyleSheet.create({
   messageMetadata: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: spacing.sm,
-    marginTop: spacing.sm,
+    marginTop: spacing.xs,
+    opacity: 0.5,
+  },
+  userMessageMetadata: {
+    marginRight: spacing.md + spacing.xs,
+  },
+  agentMessageMetadata: {
+    marginLeft: spacing.md + spacing.xs,
   },
   messageMetadataText: {
     fontFamily: 'Courier New',
     fontSize: 9,
-    textTransform: 'uppercase',
-    letterSpacing: 1.5,
-    color: 'rgba(156, 163, 175, 0.6)',
+    color: 'rgba(255, 255, 255, 0.6)',
   },
-  messageMetadataBordered: {
-    borderLeftWidth: 1,
-    borderLeftColor: 'rgba(255, 255, 255, 0.1)',
-    paddingLeft: spacing.sm,
+  messageMetadataDivider: {
+    width: 1,
+    height: 8,
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    marginHorizontal: spacing.sm,
   },
   inputBar: {
     flexDirection: 'row',
