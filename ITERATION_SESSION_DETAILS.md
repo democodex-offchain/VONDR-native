@@ -1,7 +1,11 @@
 # SessionDetailsPage - PWA Design Alignment
 
 **Created:** 2026-02-13  
-**Reference:** VONDR PWA session details UI (screenshot from Scott)
+**Reference:** 
+- VONDR PWA session details UI (screenshot from Scott)
+- `~/code/vondr-pwa/client/src/components/SessionDetailsContent.tsx`
+- `~/code/vondr-pwa/client/src/components/BrandKitContent.tsx`
+- `~/code/vondr-pwa/client/src/components/ui/` (full shadcn/ui kit)
 
 ## Current Status
 
@@ -80,29 +84,14 @@ messageContainer: {
 [Text Input (flex: 1)] [Mic Button] [Send Button]
 ```
 
-### 4. Bottom Navigation Bar (NEW)
+### 4. ~~Bottom Navigation Bar~~ ❌ REMOVED
 
-**Layout (5 buttons):**
-```
-[ ← ] [ → ] [ + ] [ 25 ] [ ⋯ ]
-```
+**UPDATE:** Bottom navigation bar was Chrome's browser UI, not part of the VONDR app.
 
-**Buttons:**
-1. **Back Arrow** (left) - Navigate to previous session
-2. **Forward Arrow** - Navigate to next session
-3. **Plus (center)** - New session/message
-4. **Calendar Badge** - Shows unread count or date (e.g., "25")
-5. **More Menu** (right) - Three dots, opens action menu
-
-**Styling:**
-- Height: 60px + safe area bottom inset
-- Background: `rgba(24, 24, 27, 0.95)` (zinc-900)
-- Border top: `rgba(255, 255, 255, 0.05)`
-- Icons: 24px, color `colors.text.secondary`
-- Center button slightly larger (32px)
-
-**SafeAreaView:**
-- Wrap in `useSafeAreaInsets` for iPhone home indicator
+**Correct design:**
+- App ends with the input bar (text input + mic + send button)
+- No additional navigation below the input bar
+- Safe area insets already handled by input bar's `paddingBottom`
 
 ### 5. Typography & Spacing Refinements
 
@@ -138,7 +127,7 @@ messageContainer: {
 2. ✅ Add email to metadata row
 3. ✅ Refine message bubble styling (borders, rounded corners)
 4. ✅ Add voice input button to input bar
-5. ✅ Build bottom navigation bar
+5. ~~✅ Build bottom navigation bar~~ ❌ Removed (was browser UI, not app)
 
 **Phase 2 (Next iteration):**
 1. Fine-tune typography and spacing
