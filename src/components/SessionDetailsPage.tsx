@@ -102,7 +102,7 @@ export default function SessionDetailsPage({ session, onClose }: SessionDetailsP
       keyboardVerticalOffset={0}
     >
       {/* Header */}
-      <View style={[styles.header, { paddingTop: insets.top + spacing.sm }]}>
+      <View style={styles.header}>
         <View style={styles.headerContent}>
           {/* Back Button */}
           <TouchableOpacity onPress={onClose} style={styles.backButton}>
@@ -261,6 +261,7 @@ const styles = StyleSheet.create({
     borderBottomColor: 'rgba(255, 255, 255, 0.05)',
     backgroundColor: 'rgba(24, 24, 27, 0.5)', // zinc-900 with 50% opacity
     paddingHorizontal: spacing.lg,
+    paddingTop: spacing.sm,
     paddingBottom: spacing.md,
   },
   headerContent: {

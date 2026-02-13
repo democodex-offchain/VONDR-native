@@ -80,7 +80,7 @@ export default function AgentsPanel({
   return (
     <Animated.View style={[styles.panel, panelStyle]}>
       {/* Header */}
-      <View style={[styles.header, { paddingTop: insets.top + spacing.sm }]}>
+      <View style={styles.header}>
         <Text style={styles.headerTitle}>AGENTS</Text>
       </View>
 
@@ -139,6 +139,7 @@ const styles = StyleSheet.create({
   },
   header: {
     paddingHorizontal: spacing.lg,
+    paddingTop: spacing.sm,
     paddingBottom: spacing.md,
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(255, 255, 255, 0.05)',
