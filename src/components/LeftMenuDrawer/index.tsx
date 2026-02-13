@@ -138,7 +138,7 @@ export default function LeftMenuDrawer({
       <GestureDetector gesture={panGesture}>
         <Animated.View style={[styles.drawer, drawerStyle]}>
           {/* Header */}
-          <View style={[styles.header, { paddingTop: insets.top + spacing.xl * 1.5 }]}>
+          <View style={[styles.header, { paddingTop: insets.top + spacing.md }]}>
             <View style={styles.headerContent}>
               <Text style={styles.headerTitle}>VONDR</Text>
               <View style={styles.closeButtonContainer}>

@@ -80,7 +80,7 @@ export default function AgentsPanel({
   return (
     <Animated.View style={[styles.panel, panelStyle]}>
       {/* Header */}
-      <View style={[styles.header, { paddingTop: insets.top + spacing.lg }]}>
+      <View style={[styles.header, { paddingTop: insets.top + spacing.md }]}>
         <Text style={styles.headerTitle}>AGENTS</Text>
       </View>
 
