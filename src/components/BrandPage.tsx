@@ -54,9 +54,9 @@ export default function BrandPage({ onClose }: BrandPageProps) {
   const insets = useSafeAreaInsets();
 
   return (
-    <View style={[styles.container, { paddingTop: insets.top }]}>
+    <View style={styles.container}>
       {/* Header */}
-      <View style={styles.header}>
+      <View style={[styles.header, { paddingTop: insets.top + spacing.sm }]}>
         <TouchableOpacity onPress={onClose} style={styles.backButton}>
           <ArrowLeft size={20} color={colors.text.secondary} />
         </TouchableOpacity>
@@ -67,7 +67,7 @@ export default function BrandPage({ onClose }: BrandPageProps) {
       <ScrollView
         style={styles.scrollView}
         contentContainerStyle={styles.content}
-        showsVerticalScrollIndicator={false}
+        showsVerticalScrollIndicator={true}
       >
         {/* Identity Section */}
         <View style={styles.section}>
@@ -189,10 +189,12 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     flex: 1,
+    backgroundColor: colors.background,
   },
   content: {
     padding: spacing.lg,
     paddingBottom: spacing.xl * 2,
+    flexGrow: 1,
   },
   section: {
     marginBottom: spacing.xl * 2,
