@@ -31,6 +31,7 @@ import {
 import { colors, typography, spacing } from '../../theme';
 import AgentsPanel from './AgentsPanel';
 import SessionsPanel from './SessionsPanel';
+import UIKitPanel from './UIKitPanel';
 import { DRAWER_WIDTH } from './constants';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
@@ -220,6 +221,12 @@ export default function LeftMenuDrawer({
           onSelectSession?.(session);
           onClose();
         }}
+        onClose={onClose}
+      />
+
+      {/* UI Kit Panel */}
+      <UIKitPanel
+        isOpen={activeSubMenu === 'ui-kit'}
         onClose={onClose}
       />
     </>

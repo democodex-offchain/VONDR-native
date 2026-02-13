@@ -30,7 +30,9 @@
   "devDependencies": {
     "@types/react": "~19.1.0",
     "babel-preset-expo": "^54.0.10",
-    "typescript": "~5.9.2"
+    "typescript": "~5.9.2",
+    "@react-native-community/cli": "latest",
+    "@react-native/metro-config": "latest"
   },
   "private": true
 }
