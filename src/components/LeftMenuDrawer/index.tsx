@@ -29,9 +29,9 @@ import {
 } from 'lucide-react-native';
 import { colors, typography, spacing } from '../../theme';
 import AgentsPanel from './AgentsPanel';
+import { DRAWER_WIDTH } from './constants';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
-const DRAWER_WIDTH = 200; // Fixed width to match PWA
 
 interface MenuItem {
   id: string;

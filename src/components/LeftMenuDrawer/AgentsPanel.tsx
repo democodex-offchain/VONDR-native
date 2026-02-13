@@ -1,10 +1,12 @@
 /**
  * AgentsPanel - Shows list of available agents
  * Slides in as right panel next to the main menu
+ * Width: Dynamically fills remaining screen width after left menu
+ * (If left menu is 200px on a 400px screen, panel will be 200px)
  */
 
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -13,8 +15,10 @@ import Animated, {
   runOnJS,
 } from 'react-native-reanimated';
 import { colors, typography, spacing } from '../../theme';
+import { DRAWER_WIDTH } from './constants';
 
-const PANEL_WIDTH = 188;
+const { width: SCREEN_WIDTH } = Dimensions.get('window');
+const PANEL_WIDTH = SCREEN_WIDTH - DRAWER_WIDTH; // Fill remaining screen width dynamically
 
 const AGENTS = [
   'XEO',
@@ -118,7 +122,7 @@ const styles = StyleSheet.create({
   panel: {
     position: 'absolute',
     top: 0,
-    left: 200, // Right next to main menu
+    left: DRAWER_WIDTH, // Right next to main menu
     bottom: 0,
     width: PANEL_WIDTH,
     backgroundColor: 'rgba(24, 24, 27, 0.95)', // zinc-900 with 95% opacity
