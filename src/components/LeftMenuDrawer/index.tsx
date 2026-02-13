@@ -30,6 +30,7 @@ import {
 } from 'lucide-react-native';
 import { colors, typography, spacing } from '../../theme';
 import AgentsPanel from './AgentsPanel';
+import SessionsPanel from './SessionsPanel';
 import { DRAWER_WIDTH } from './constants';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
@@ -207,6 +208,12 @@ export default function LeftMenuDrawer({
           onSelectAgent?.(agent);
           onClose();
         }}
+        onClose={onClose}
+      />
+
+      {/* Sessions Panel */}
+      <SessionsPanel
+        isOpen={activeSubMenu === 'sessions'}
         onClose={onClose}
       />
     </>
