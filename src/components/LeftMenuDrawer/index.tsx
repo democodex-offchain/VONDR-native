@@ -1,9 +1,12 @@
 /**
- * LeftMenuDrawer - Slide-in menu from left side
- * Phase 1: Shell with styling only, no functionality
+ * LeftMenuDrawer - Matches PWA design exactly
+ * - Dark background (zinc-900)
+ * - VONDR header with agent name
+ * - Menu items with icons + chevrons
+ * - LOG OUT at bottom
  */
 
-import React, { useCallback, useEffect, useRef } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import Animated, {
   useAnimatedStyle,
@@ -13,29 +16,59 @@ import Animated, {
   runOnJS,
 } from 'react-native-reanimated';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
-import { X } from 'lucide-react-native';
-import { colors, typography, spacing, borderRadius } from '../../theme';
+import { 
+  X, 
+  Bot, 
+  MessageSquare, 
+  Settings, 
+  Plug, 
+  Palette, 
+  FileText, 
+  ChevronRight,
+  LogOut 
+} from 'lucide-react-native';
+import { colors, typography, spacing } from '../../theme';
 
-const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
-const DRAWER_WIDTH = SCREEN_WIDTH * 0.8;
-const DRAWER_MAX_WIDTH = 320;
-const FINAL_DRAWER_WIDTH = Math.min(DRAWER_WIDTH, DRAWER_MAX_WIDTH);
+const { width: SCREEN_WIDTH } = Dimensions.get('window');
+const DRAWER_WIDTH = 200; // Fixed width to match PWA
+
+interface MenuItem {
+  id: string;
+  label: string;
+  icon: any;
+  hasSubMenu: boolean;
+}
+
+const MENU_ITEMS: MenuItem[] = [
+  { id: 'agents', label: 'AGENTS', icon: Bot, hasSubMenu: true },
+  { id: 'sessions', label: 'SESSIONS', icon: MessageSquare, hasSubMenu: true },
+  { id: 'settings', label: 'SETTINGS', icon: Settings, hasSubMenu: true },
+  { id: 'integrations', label: 'INTEGRATIONS', icon: Plug, hasSubMenu: true },
+  { id: 'ui-kit', label: 'UI KIT', icon: Palette, hasSubMenu: true },
+  { id: 'read-me', label: 'READ ME', icon: FileText, hasSubMenu: true },
+];
 
 interface LeftMenuDrawerProps {
   isOpen: boolean;
   onClose: () => void;
+  selectedAgent?: string;
   onMenuItemPress?: (item: string) => void;
+  activeSubMenu?: string | null;
 }
 
-const MENU_ITEMS = ['Agents', 'Sessions', 'Settings', 'Integrations', 'Demo'];
-
-export default function LeftMenuDrawer({ isOpen, onClose, onMenuItemPress }: LeftMenuDrawerProps) {
-  const translateX = useSharedValue(-FINAL_DRAWER_WIDTH);
+export default function LeftMenuDrawer({ 
+  isOpen, 
+  onClose, 
+  selectedAgent = 'ARYA',
+  onMenuItemPress,
+  activeSubMenu = null 
+}: LeftMenuDrawerProps) {
+  const translateX = useSharedValue(-DRAWER_WIDTH);
 
   // Animate drawer open/close
-  useEffect(() => {
+  React.useEffect(() => {
     translateX.value = withTiming(
-      isOpen ? 0 : -FINAL_DRAWER_WIDTH,
+      isOpen ? 0 : -DRAWER_WIDTH,
       {
         duration: 300,
         easing: isOpen ? Easing.out(Easing.exp) : Easing.in(Easing.exp),
@@ -51,26 +84,23 @@ export default function LeftMenuDrawer({ isOpen, onClose, onMenuItemPress }: Lef
   // Backdrop animated style
   const backdropStyle = useAnimatedStyle(() => ({
     opacity: isOpen ? withTiming(1, { duration: 300 }) : withTiming(0, { duration: 250 }),
-    pointerEvents: isOpen ? 'auto' : 'none',
   }));
 
   // Swipe left to close
   const panGesture = Gesture.Pan()
     .onUpdate((event) => {
       if (event.translationX < 0) {
-        translateX.value = Math.max(-FINAL_DRAWER_WIDTH, event.translationX);
+        translateX.value = Math.max(-DRAWER_WIDTH, event.translationX);
       }
     })
     .onEnd((event) => {
-      if (event.translationX < -FINAL_DRAWER_WIDTH / 3 || event.velocityX < -500) {
-        // Close drawer
-        translateX.value = withTiming(-FINAL_DRAWER_WIDTH, { duration: 250 }, (finished) => {
+      if (event.translationX < -DRAWER_WIDTH / 3 || event.velocityX < -500) {
+        translateX.value = withTiming(-DRAWER_WIDTH, { duration: 250 }, (finished) => {
           if (finished) {
             runOnJS(onClose)();
           }
         });
       } else {
-        // Snap back
         translateX.value = withTiming(0, { duration: 250 });
       }
     });
@@ -80,7 +110,7 @@ export default function LeftMenuDrawer({ isOpen, onClose, onMenuItemPress }: Lef
   return (
     <>
       {/* Backdrop */}
-      <Animated.View style={[styles.backdrop, backdropStyle]}>
+      <Animated.View style={[styles.backdrop, backdropStyle]} pointerEvents={isOpen ? 'auto' : 'none'}>
         <TouchableOpacity
           style={StyleSheet.absoluteFill}
           activeOpacity={1}
@@ -90,28 +120,65 @@ export default function LeftMenuDrawer({ isOpen, onClose, onMenuItemPress }: Lef
 
       {/* Drawer */}
       <GestureDetector gesture={panGesture}>
-        <Animated.View style={[styles.drawer, drawerStyle, { width: FINAL_DRAWER_WIDTH }]}>
+        <Animated.View style={[styles.drawer, drawerStyle]}>
           {/* Header */}
           <View style={styles.header}>
-            <Text style={styles.headerTitle}>Menu</Text>
-            <TouchableOpacity onPress={onClose} style={styles.closeButton}>
-              <X size={20} color={colors.text.secondary} />
-            </TouchableOpacity>
+            <View style={styles.headerContent}>
+              <Text style={styles.headerTitle}>VONDR</Text>
+              <View style={styles.closeButtonContainer}>
+                <TouchableOpacity onPress={onClose} style={styles.closeButton}>
+                  <X size={16} color={colors.text.secondary} />
+                </TouchableOpacity>
+              </View>
+            </View>
+            <Text style={styles.agentName}>{selectedAgent}</Text>
           </View>
 
-          {/* Content Area */}
-          <View style={styles.content}>
+          {/* Menu Items */}
+          <View style={styles.menuContainer}>
             {MENU_ITEMS.map((item) => (
               <TouchableOpacity
-                key={item}
+                key={item.id}
                 style={styles.menuItem}
-                onPress={() => {
-                  onMenuItemPress?.(item);
-                }}
+                onPress={() => onMenuItemPress?.(item.id)}
               >
-                <Text style={styles.menuItemText}>{item}</Text>
+                <View style={styles.menuItemLeft}>
+                  <item.icon 
+                    size={16} 
+                    color={activeSubMenu === item.id ? colors.text.primary : colors.text.secondary} 
+                  />
+                  <Text 
+                    style={[
+                      styles.menuItemText,
+                      activeSubMenu === item.id && styles.menuItemTextActive
+                    ]}
+                  >
+                    {item.label}
+                  </Text>
+                </View>
+                {item.hasSubMenu && (
+                  <ChevronRight 
+                    size={16} 
+                    color={activeSubMenu === item.id ? colors.text.primary : 'rgba(255, 255, 255, 0.3)'} 
+                    style={activeSubMenu === item.id && { transform: [{ rotate: '90deg' }] }}
+                  />
+                )}
               </TouchableOpacity>
             ))}
+          </View>
+
+          {/* Log Out Button */}
+          <View style={styles.footer}>
+            <TouchableOpacity
+              style={styles.logoutButton}
+              onPress={() => {
+                // Handle logout
+                onClose();
+              }}
+            >
+              <LogOut size={16} color={colors.text.secondary} />
+              <Text style={styles.logoutText}>LOG OUT</Text>
+            </TouchableOpacity>
           </View>
         </Animated.View>
       </GestureDetector>
@@ -126,7 +193,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
     zIndex: 50,
   },
   drawer: {
@@ -134,9 +201,10 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     bottom: 0,
-    backgroundColor: colors.surface,
+    width: DRAWER_WIDTH,
+    backgroundColor: '#18181b', // zinc-900
     borderRightWidth: 1,
-    borderRightColor: colors.border,
+    borderRightColor: 'rgba(255, 255, 255, 0.05)',
     zIndex: 51,
     shadowColor: '#000',
     shadowOffset: { width: 2, height: 0 },
@@ -145,33 +213,83 @@ const styles = StyleSheet.create({
     elevation: 10,
   },
   header: {
+    paddingHorizontal: spacing.lg,
+    paddingTop: spacing.xl * 1.5,
+    paddingBottom: spacing.xl * 1.5,
+  },
+  headerContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  headerTitle: {
+    fontFamily: 'System',
+    fontSize: 24,
+    fontWeight: '300',
+    letterSpacing: 2,
+    textTransform: 'uppercase',
+    color: 'rgba(255, 255, 255, 0.9)',
+  },
+  closeButtonContainer: {
+    flex: 1,
+    alignItems: 'center',
+    marginRight: -20,
+  },
+  closeButton: {
+    padding: spacing.xs,
+    borderRadius: 100,
+  },
+  agentName: {
+    fontFamily: 'Courier New',
+    fontSize: 10,
+    textTransform: 'uppercase',
+    letterSpacing: 2.5,
+    color: colors.text.secondary,
+    marginTop: spacing.xs,
+  },
+  menuContainer: {
+    flex: 1,
+    paddingHorizontal: spacing.lg,
+    paddingTop: spacing.md,
+    gap: spacing.lg,
+  },
+  menuItem: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: spacing.lg,
-    paddingVertical: spacing.xl,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.border,
+    paddingVertical: spacing.sm,
   },
-  headerTitle: {
-    ...typography.h3, // Brand kit: uppercase, wide tracking
-    color: colors.text.primary,
-  },
-  closeButton: {
-    padding: spacing.sm,
-  },
-  content: {
-    flex: 1,
-    paddingVertical: spacing.md,
-  },
-  menuItem: {
-    paddingHorizontal: spacing.lg,
-    paddingVertical: spacing.md,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.borderLight,
+  menuItemLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.md,
   },
   menuItemText: {
-    ...typography.bodyLarge,
-    color: colors.muted, // Brand kit: muted text for body copy
+    fontFamily: 'Courier New',
+    fontSize: 12,
+    textTransform: 'uppercase',
+    letterSpacing: 2.5,
+    color: colors.text.secondary,
+  },
+  menuItemTextActive: {
+    color: colors.text.primary,
+  },
+  footer: {
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.xl,
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(255, 255, 255, 0.05)',
+  },
+  logoutButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.md,
+    paddingVertical: spacing.sm,
+  },
+  logoutText: {
+    fontFamily: 'Courier New',
+    fontSize: 12,
+    textTransform: 'uppercase',
+    letterSpacing: 2.5,
+    color: colors.text.secondary,
   },
 });
