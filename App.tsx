@@ -31,6 +31,7 @@ export default function App() {
   
   // Agent state
   const [selectedAgent, setSelectedAgent] = useState<string>('XEO');
+  const [pulseState, setPulseState] = useState<'idle' | 'processing' | 'active'>('idle');
   
   // Debug mode
   const [isDebugMode, setIsDebugMode] = useState(true);
@@ -87,7 +88,7 @@ export default function App() {
       <SafeAreaProvider>
         <MainCanvas onSingleTap={handleSingleTap} onDoubleTap={handleDoubleTap}>
           {/* Header */}
-          <Header selectedAgent={selectedAgent} />
+          <Header selectedAgent={selectedAgent} pulseVariant={pulseState} />
 
           {/* Central Orb */}
           <CentralOrb

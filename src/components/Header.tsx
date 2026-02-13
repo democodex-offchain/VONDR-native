@@ -6,13 +6,15 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import PulseIcon from './PulseIcon';
 import { colors, typography, spacing } from '../theme';
 
 interface HeaderProps {
   selectedAgent?: string;
+  pulseVariant?: 'idle' | 'processing' | 'active';
 }
 
-export default function Header({ selectedAgent }: HeaderProps) {
+export default function Header({ selectedAgent, pulseVariant = 'idle' }: HeaderProps) {
   const insets = useSafeAreaInsets();
   
   return (
@@ -26,6 +28,11 @@ export default function Header({ selectedAgent }: HeaderProps) {
           <Text style={styles.subtitle}>{selectedAgent}</Text>
         </Animated.View>
       )}
+
+      {/* Pulse Icon - Top Right */}
+      <View style={styles.pulseContainer}>
+        <PulseIcon variant={pulseVariant} size={20} />
+      </View>
     </View>
   );
 }
@@ -49,5 +56,11 @@ const styles = StyleSheet.create({
     ...typography.subtitle,
     color: colors.text.muted,
     marginTop: spacing.xs,
+  },
+  pulseContainer: {
+    position: 'absolute',
+    top: spacing.sm,
+    right: spacing.lg,
+    padding: spacing.sm,
   },
 });

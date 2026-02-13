@@ -6,6 +6,7 @@
 export { colors } from './colors';
 export { typography } from './typography';
 export { spacing, borderRadius } from './spacing';
+export { buttonStyles } from './buttons';
 
 // Re-export types
 export type { Colors } from './colors';
