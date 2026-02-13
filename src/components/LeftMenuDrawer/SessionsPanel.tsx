@@ -25,6 +25,7 @@ interface Session {
   title: string;
   agentName: string;
   createdAt: string;
+  userEmail?: string;
 }
 
 // Mock sessions data (will be replaced with real data later)
@@ -34,24 +35,28 @@ const MOCK_SESSIONS: Session[] = [
     title: 'Product roadmap discussion for Q2 2026',
     agentName: 'XEO',
     createdAt: '2026-02-13T10:30:00Z',
+    userEmail: 'scott@xola.com',
   },
   {
     id: '2',
     title: 'Marketing campaign analysis',
     agentName: 'Marketing',
     createdAt: '2026-02-12T15:45:00Z',
+    userEmail: 'scott@xola.com',
   },
   {
     id: '3',
     title: 'Sales pipeline review',
     agentName: 'Sales',
     createdAt: '2026-02-11T09:20:00Z',
+    userEmail: 'scott@xola.com',
   },
   {
     id: '4',
     title: 'Customer support metrics',
     agentName: 'Support',
     createdAt: '2026-02-10T14:00:00Z',
+    userEmail: 'scott@xola.com',
   },
 ];
 

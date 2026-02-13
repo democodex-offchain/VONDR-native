@@ -20,6 +20,13 @@ import {
   Calendar, 
   Hash,
   Send,
+  Activity,
+  Mail,
+  Mic,
+  ChevronLeft,
+  ChevronRight,
+  Plus,
+  MoreHorizontal,
 } from 'lucide-react-native';
 import { colors, typography, spacing } from '../theme';
 
@@ -37,6 +44,7 @@ interface SessionDetailsPageProps {
     title: string;
     agentName: string;
     createdAt: string;
+    userEmail?: string;
     tokens?: number;
     cost?: string;
   };
@@ -123,6 +131,14 @@ export default function SessionDetailsPage({ session, onClose }: SessionDetailsP
                 <Text style={styles.metadataText}>{formatDate(session.createdAt)}</Text>
               </View>
 
+              {/* Email */}
+              {session.userEmail && (
+                <View style={[styles.metadataItem, styles.metadataItemBordered]}>
+                  <Mail size={12} color={colors.text.secondary} />
+                  <Text style={styles.metadataText}>{session.userEmail.toUpperCase()}</Text>
+                </View>
+              )}
+
               {/* Session ID */}
               <View style={[styles.metadataItem, styles.metadataItemBordered]}>
                 <Hash size={12} color={colors.text.secondary} />
@@ -144,6 +160,11 @@ export default function SessionDetailsPage({ session, onClose }: SessionDetailsP
               )}
             </View>
           </View>
+
+          {/* Activity Icon */}
+          <TouchableOpacity style={styles.activityButton}>
+            <Activity size={20} color="#3B82F6" />
+          </TouchableOpacity>
         </View>
       </View>
 
@@ -200,6 +221,15 @@ export default function SessionDetailsPage({ session, onClose }: SessionDetailsP
           returnKeyType="default"
         />
         
+        {/* Voice Button */}
+        <TouchableOpacity
+          onPress={() => console.log('Voice input')}
+          style={styles.voiceButton}
+        >
+          <Mic size={20} color={colors.text.secondary} />
+        </TouchableOpacity>
+
+        {/* Send Button */}
         <TouchableOpacity
           onPress={handleSend}
           disabled={!inputText.trim()}
@@ -209,6 +239,31 @@ export default function SessionDetailsPage({ session, onClose }: SessionDetailsP
           ]}
         >
           <Send size={20} color={inputText.trim() ? colors.text.primary : colors.text.secondary} />
+        </TouchableOpacity>
+      </View>
+
+      {/* Bottom Navigation */}
+      <View style={[styles.bottomNav, { paddingBottom: insets.bottom }]}>
+        <TouchableOpacity style={styles.navButton}>
+          <ChevronLeft size={24} color={colors.text.secondary} />
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.navButton}>
+          <ChevronRight size={24} color={colors.text.secondary} />
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.navButtonCenter}>
+          <Plus size={28} color={colors.text.secondary} />
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.navButton}>
+          <View style={styles.badgeContainer}>
+            <Text style={styles.badgeText}>25</Text>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.navButton}>
+          <MoreHorizontal size={24} color={colors.text.secondary} />
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
@@ -291,6 +346,11 @@ const styles = StyleSheet.create({
     gap: spacing.xl,
   },
   messageContainer: {
+    backgroundColor: 'rgba(39, 39, 42, 0.5)', // zinc-800 with transparency
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.1)',
+    borderRadius: 12,
+    padding: spacing.md,
     marginBottom: spacing.lg,
   },
   userMessage: {
@@ -365,5 +425,57 @@ const styles = StyleSheet.create({
   },
   sendButtonDisabled: {
     opacity: 0.5,
+  },
+  activityButton: {
+    padding: spacing.sm,
+    marginLeft: spacing.md,
+    marginTop: spacing.xs,
+  },
+  voiceButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: 'rgba(39, 39, 42, 1)', // zinc-800
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  bottomNav: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    height: 60,
+    paddingHorizontal: spacing.lg,
+    paddingTop: spacing.sm,
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(255, 255, 255, 0.05)',
+    backgroundColor: 'rgba(24, 24, 27, 0.95)', // zinc-900
+  },
+  navButton: {
+    width: 44,
+    height: 44,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  navButtonCenter: {
+    width: 48,
+    height: 48,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  badgeContainer: {
+    backgroundColor: 'rgba(59, 130, 246, 0.2)', // blue with transparency
+    borderWidth: 1,
+    borderColor: '#3B82F6',
+    borderRadius: 12,
+    paddingHorizontal: spacing.sm,
+    paddingVertical: 2,
+    minWidth: 32,
+    alignItems: 'center',
+  },
+  badgeText: {
+    fontFamily: 'Courier New',
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#3B82F6',
   },
 });
