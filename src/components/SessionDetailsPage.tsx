@@ -23,10 +23,6 @@ import {
   Activity,
   Mail,
   Mic,
-  ChevronLeft,
-  ChevronRight,
-  Plus,
-  MoreHorizontal,
 } from 'lucide-react-native';
 import { colors, typography, spacing } from '../theme';
 
@@ -241,31 +237,6 @@ export default function SessionDetailsPage({ session, onClose }: SessionDetailsP
           <Send size={20} color={inputText.trim() ? colors.text.primary : colors.text.secondary} />
         </TouchableOpacity>
       </View>
-
-      {/* Bottom Navigation */}
-      <View style={[styles.bottomNav, { paddingBottom: insets.bottom }]}>
-        <TouchableOpacity style={styles.navButton}>
-          <ChevronLeft size={24} color={colors.text.secondary} />
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.navButton}>
-          <ChevronRight size={24} color={colors.text.secondary} />
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.navButtonCenter}>
-          <Plus size={28} color={colors.text.secondary} />
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.navButton}>
-          <View style={styles.badgeContainer}>
-            <Text style={styles.badgeText}>25</Text>
-          </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.navButton}>
-          <MoreHorizontal size={24} color={colors.text.secondary} />
-        </TouchableOpacity>
-      </View>
     </KeyboardAvoidingView>
   );
 }
@@ -438,44 +409,5 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(39, 39, 42, 1)', // zinc-800
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  bottomNav: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-around',
-    height: 60,
-    paddingHorizontal: spacing.lg,
-    paddingTop: spacing.sm,
-    borderTopWidth: 1,
-    borderTopColor: 'rgba(255, 255, 255, 0.05)',
-    backgroundColor: 'rgba(24, 24, 27, 0.95)', // zinc-900
-  },
-  navButton: {
-    width: 44,
-    height: 44,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  navButtonCenter: {
-    width: 48,
-    height: 48,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  badgeContainer: {
-    backgroundColor: 'rgba(59, 130, 246, 0.2)', // blue with transparency
-    borderWidth: 1,
-    borderColor: '#3B82F6',
-    borderRadius: 12,
-    paddingHorizontal: spacing.sm,
-    paddingVertical: 2,
-    minWidth: 32,
-    alignItems: 'center',
-  },
-  badgeText: {
-    fontFamily: 'Courier New',
-    fontSize: 12,
-    fontWeight: '600',
-    color: '#3B82F6',
   },
 });
