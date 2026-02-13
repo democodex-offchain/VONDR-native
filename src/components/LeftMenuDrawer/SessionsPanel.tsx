@@ -131,7 +131,7 @@ export default function SessionsPanel({
                 ]}
                 onPress={() => {
                   onSelectSession?.(session);
-                  onClose();
+                  // Don't call onClose() here - let parent handle menu closing
                 }}
               >
                 {/* Session Title */}

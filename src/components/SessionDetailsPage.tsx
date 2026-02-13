@@ -217,8 +217,10 @@ export default function SessionDetailsPage({ session, onClose }: SessionDetailsP
 
 const styles = StyleSheet.create({
   container: {
+    ...StyleSheet.absoluteFillObject,
     flex: 1,
     backgroundColor: colors.background,
+    zIndex: 100, // Above all menus and panels
   },
   header: {
     borderBottomWidth: 1,
