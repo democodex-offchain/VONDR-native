@@ -98,21 +98,21 @@ export default function CentralOrb({ onPullDown, onPullLeft, onPullRight }: Cent
     ],
   }));
 
-  // Glow color based on drag direction
+  // Glow color based on drag direction - Brand Kit orb spectrum
   const glowStyle = useAnimatedStyle(() => {
-    let glowColor = colors.accent.purpleLight;
+    let glowColor = colors.orb.void + '33'; // Default: purple with 20% opacity
     
     if (translateX.value < -DRAG_THRESHOLD) {
-      glowColor = colors.accent.redLight; // Cancel
+      glowColor = colors.action.alert + '33'; // Cancel: red
     } else if (translateX.value > DRAG_THRESHOLD) {
-      glowColor = colors.accent.emeraldLight; // Send
+      glowColor = colors.orb.life + '33'; // Send: green
     } else if (translateY.value > DRAG_THRESHOLD) {
-      glowColor = colors.accent.blueLight; // Agents
+      glowColor = colors.orb.core + '33'; // Agents: blue
     }
     
     return {
       backgroundColor: glowColor,
-      opacity: isActive ? 0.6 : 0.3,
+      opacity: isActive ? 0.8 : 0.4,
     };
   });
 
@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
     borderColor: colors.border,
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: colors.accent.purple,
+    shadowColor: colors.orb.void, // Brand kit: void purple
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.5,
     shadowRadius: 20,
@@ -185,11 +185,11 @@ const styles = StyleSheet.create({
     width: ORB_SIZE - 40,
     height: ORB_SIZE - 40,
     borderRadius: (ORB_SIZE - 40) / 2,
-    backgroundColor: colors.accent.purpleLight,
+    backgroundColor: colors.orb.void, // Brand kit: void purple
     opacity: 0.2,
   },
   innerOrbActive: {
-    backgroundColor: colors.accent.purple,
+    backgroundColor: colors.orb.pulse, // Brand kit: pulse pink
     opacity: 0.6,
   },
 });

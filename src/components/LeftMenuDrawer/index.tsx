@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
     borderBottomColor: colors.border,
   },
   headerTitle: {
-    ...typography.h2,
+    ...typography.h3, // Brand kit: uppercase, wide tracking
     color: colors.text.primary,
   },
   closeButton: {
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
     borderBottomColor: colors.borderLight,
   },
   menuItemText: {
-    ...typography.body,
-    color: colors.text.secondary,
+    ...typography.bodyLarge,
+    color: colors.muted, // Brand kit: muted text for body copy
   },
 });

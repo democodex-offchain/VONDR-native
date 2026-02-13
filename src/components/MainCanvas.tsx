@@ -56,9 +56,9 @@ export default function MainCanvas({ children, onSingleTap, onDoubleTap }: MainC
 
   return (
     <View style={styles.container}>
-      {/* Radial gradient background */}
+      {/* Radial gradient background - Brand Kit spec */}
       <LinearGradient
-        colors={[colors.gradient.from, colors.gradient.via, colors.gradient.to]}
+        colors={[colors.gradient.backgroundFrom, colors.gradient.backgroundVia, colors.gradient.backgroundTo]}
         start={{ x: 0.5, y: 0 }}
         end={{ x: 0.5, y: 1 }}
         style={StyleSheet.absoluteFill}

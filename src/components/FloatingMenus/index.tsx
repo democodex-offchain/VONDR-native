@@ -106,10 +106,9 @@ const styles = StyleSheet.create({
     gap: spacing.xs,
   },
   menuButtonText: {
-    ...typography.caption,
-    color: colors.text.muted,
+    ...typography.label, // Brand kit: monospace uppercase labels
+    color: colors.muted,
     fontSize: 10,
-    textTransform: 'uppercase',
   },
 
   // Debug Panel
@@ -154,7 +153,7 @@ const styles = StyleSheet.create({
   },
   voiceBar: {
     width: 2,
-    backgroundColor: colors.accent.red,
+    backgroundColor: colors.action.alert, // Brand kit: alert red
     borderRadius: 1,
   },
   debugContent: {

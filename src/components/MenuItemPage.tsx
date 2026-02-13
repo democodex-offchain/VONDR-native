@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     marginLeft: -spacing.sm,
   },
   title: {
-    ...typography.h2,
+    ...typography.h3, // Brand kit: uppercase, wide tracking
     color: colors.text.primary,
     flex: 1,
     textAlign: 'center',
@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
   },
   placeholderText: {
     ...typography.body,
-    color: colors.text.muted,
+    color: colors.muted, // Brand kit: muted for body text
     textAlign: 'center',
   },
 });

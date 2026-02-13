@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
     marginBottom: spacing.md,
   },
   headerTitle: {
-    ...typography.h2,
+    ...typography.h3, // Brand kit: uppercase, wide tracking
     color: colors.text.primary,
   },
   closeButton: {
@@ -207,15 +207,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   agentCardSelected: {
-    borderColor: colors.accent.purple,
-    backgroundColor: colors.accent.purpleLight,
+    borderColor: colors.orb.void, // Brand kit: void purple
+    backgroundColor: colors.orb.void + '20', // 12% opacity
   },
   agentText: {
     ...typography.body,
-    color: colors.text.secondary,
+    color: colors.muted, // Brand kit: muted text
   },
   agentTextSelected: {
-    color: colors.accent.purple,
+    color: colors.orb.pulse, // Brand kit: pulse pink for active state
     fontWeight: '600',
   },
 });
