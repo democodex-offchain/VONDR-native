@@ -7,6 +7,7 @@
 
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -48,6 +49,7 @@ export default function AgentsPanel({
 }: AgentsPanelProps) {
   const translateX = useSharedValue(-PANEL_WIDTH);
   const [shouldRender, setShouldRender] = React.useState(false);
+  const insets = useSafeAreaInsets();
 
   React.useEffect(() => {
     if (isOpen) {
@@ -78,7 +80,7 @@ export default function AgentsPanel({
   return (
     <Animated.View style={[styles.panel, panelStyle]}>
       {/* Header */}
-      <View style={styles.header}>
+      <View style={[styles.header, { paddingTop: insets.top + spacing.lg }]}>
         <Text style={styles.headerTitle}>AGENTS</Text>
       </View>
 
@@ -137,7 +139,8 @@ const styles = StyleSheet.create({
   },
   header: {
     paddingHorizontal: spacing.lg,
-    paddingVertical: spacing.lg,
+    paddingBottom: spacing.lg,
+    // paddingTop applied dynamically with safe area insets
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(255, 255, 255, 0.05)',
   },

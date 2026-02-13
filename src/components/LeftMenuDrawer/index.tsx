@@ -8,6 +8,7 @@
 
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -68,6 +69,7 @@ export default function LeftMenuDrawer({
 }: LeftMenuDrawerProps) {
   const [localActiveSubMenu, setLocalActiveSubMenu] = React.useState<string | null>(null);
   const translateX = useSharedValue(-DRAWER_WIDTH);
+  const insets = useSafeAreaInsets();
 
   // Use controlled or local state
   const activeSubMenu = controlledActiveSubMenu !== null ? controlledActiveSubMenu : localActiveSubMenu;
@@ -136,7 +138,7 @@ export default function LeftMenuDrawer({
       <GestureDetector gesture={panGesture}>
         <Animated.View style={[styles.drawer, drawerStyle]}>
           {/* Header */}
-          <View style={styles.header}>
+          <View style={[styles.header, { paddingTop: insets.top + spacing.xl * 1.5 }]}>
             <View style={styles.headerContent}>
               <Text style={styles.headerTitle}>VONDR</Text>
               <View style={styles.closeButtonContainer}>
@@ -239,8 +241,8 @@ const styles = StyleSheet.create({
   },
   header: {
     paddingHorizontal: spacing.lg,
-    paddingTop: spacing.xl * 1.5,
     paddingBottom: spacing.xl * 1.5,
+    // paddingTop applied dynamically with safe area insets
   },
   headerContent: {
     flexDirection: 'row',

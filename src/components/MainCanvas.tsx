@@ -10,6 +10,7 @@ import {
   TouchableWithoutFeedback,
   Dimensions,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import Animated, { useAnimatedStyle, withTiming } from 'react-native-reanimated';
 import { colors } from '../theme';
@@ -64,24 +65,26 @@ export default function MainCanvas({ children, onSingleTap, onDoubleTap }: MainC
         style={StyleSheet.absoluteFill}
       />
 
-      <TouchableWithoutFeedback onPress={handleTap}>
-        <View style={styles.content}>
-          {children}
+      <SafeAreaView style={styles.safeArea} edges={['top', 'left', 'right']}>
+        <TouchableWithoutFeedback onPress={handleTap}>
+          <View style={styles.content}>
+            {children}
 
-          {/* Debug tap zone indicator (optional) */}
-          {__DEV__ && (
-            <View
-              style={[
-                styles.tapZone,
-                {
-                  bottom: 0,
-                  height: TAP_ZONE_HEIGHT,
-                },
-              ]}
-            />
-          )}
-        </View>
-      </TouchableWithoutFeedback>
+            {/* Debug tap zone indicator (optional) */}
+            {__DEV__ && (
+              <View
+                style={[
+                  styles.tapZone,
+                  {
+                    bottom: 0,
+                    height: TAP_ZONE_HEIGHT,
+                  },
+                ]}
+              />
+            )}
+          </View>
+        </TouchableWithoutFeedback>
+      </SafeAreaView>
     </View>
   );
 }
@@ -90,6 +93,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.background,
+  },
+  safeArea: {
+    flex: 1,
   },
   content: {
     flex: 1,
