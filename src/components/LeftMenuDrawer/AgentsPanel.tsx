@@ -10,6 +10,7 @@ import Animated, {
   useSharedValue,
   withTiming,
   Easing,
+  runOnJS,
 } from 'react-native-reanimated';
 import { colors, typography, spacing } from '../../theme';
 
@@ -42,22 +43,33 @@ export default function AgentsPanel({
   onClose 
 }: AgentsPanelProps) {
   const translateX = useSharedValue(-PANEL_WIDTH);
+  const [shouldRender, setShouldRender] = React.useState(false);
 
   React.useEffect(() => {
-    translateX.value = withTiming(
-      isOpen ? 0 : -PANEL_WIDTH,
-      {
+    if (isOpen) {
+      setShouldRender(true);
+      translateX.value = withTiming(0, {
         duration: 300,
         easing: Easing.out(Easing.exp),
-      }
-    );
-  }, [isOpen]);
+      });
+    } else if (shouldRender) {
+      translateX.value = withTiming(-PANEL_WIDTH, {
+        duration: 300,
+        easing: Easing.in(Easing.exp),
+      }, (finished) => {
+        if (finished) {
+          // Unmount after animation completes
+          runOnJS(setShouldRender)(false);
+        }
+      });
+    }
+  }, [isOpen, shouldRender]);
 
   const panelStyle = useAnimatedStyle(() => ({
     transform: [{ translateX: translateX.value }],
   }));
 
-  if (!isOpen) return null;
+  if (!shouldRender) return null;
 
   return (
     <Animated.View style={[styles.panel, panelStyle]}>
@@ -112,7 +124,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(24, 24, 27, 0.95)', // zinc-900 with 95% opacity
     borderRightWidth: 1,
     borderRightColor: 'rgba(255, 255, 255, 0.05)',
-    zIndex: 52, // Above main menu
+    zIndex: 50, // Behind main menu (main menu is 51)
     shadowColor: '#000',
     shadowOffset: { width: 2, height: 0 },
     shadowOpacity: 0.5,
