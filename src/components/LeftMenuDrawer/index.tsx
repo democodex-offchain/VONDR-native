@@ -58,6 +58,7 @@ interface LeftMenuDrawerProps {
   onSelectAgent?: (agent: string) => void;
   onMenuItemPress?: (item: string) => void;
   activeSubMenu?: string | null;
+  onSelectSession?: (session: any) => void;
 }
 
 export default function LeftMenuDrawer({ 
@@ -66,7 +67,8 @@ export default function LeftMenuDrawer({
   selectedAgent = 'ARYA',
   onSelectAgent,
   onMenuItemPress,
-  activeSubMenu: controlledActiveSubMenu = null 
+  activeSubMenu: controlledActiveSubMenu = null,
+  onSelectSession 
 }: LeftMenuDrawerProps) {
   const [localActiveSubMenu, setLocalActiveSubMenu] = React.useState<string | null>(null);
   const translateX = useSharedValue(-DRAWER_WIDTH);
@@ -214,6 +216,10 @@ export default function LeftMenuDrawer({
       {/* Sessions Panel */}
       <SessionsPanel
         isOpen={activeSubMenu === 'sessions'}
+        onSelectSession={(session) => {
+          onSelectSession?.(session);
+          onClose();
+        }}
         onClose={onClose}
       />
     </>

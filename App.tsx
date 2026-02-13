@@ -18,6 +18,7 @@ import RightDrawer from './src/components/RightDrawer';
 import AgentSelectorDrawer from './src/components/AgentSelectorDrawer';
 import FloatingMenus from './src/components/FloatingMenus';
 import MenuItemPage from './src/components/MenuItemPage';
+import SessionDetailsPage from './src/components/SessionDetailsPage';
 
 export default function App() {
   // Menu state
@@ -28,6 +29,7 @@ export default function App() {
   
   // Navigation state
   const [currentPage, setCurrentPage] = useState<string | null>(null);
+  const [selectedSession, setSelectedSession] = useState<any | null>(null);
   
   // Agent state
   const [selectedAgent, setSelectedAgent] = useState<string>('XEO');
@@ -110,6 +112,10 @@ export default function App() {
             onMenuItemPress={handleMenuItemPress}
             selectedAgent={selectedAgent}
             onSelectAgent={handleSelectAgent}
+            onSelectSession={(session) => {
+              setSelectedSession(session);
+              setIsLeftMenuOpen(false);
+            }}
           />
 
           {/* Right Drawer */}
@@ -129,6 +135,14 @@ export default function App() {
             title={currentPage || ''}
             onClose={handlePageClose}
           />
+
+          {/* Session Details Page */}
+          {selectedSession && (
+            <SessionDetailsPage
+              session={selectedSession}
+              onClose={() => setSelectedSession(null)}
+            />
+          )}
         </MainCanvas>
 
         <StatusBar style="light" />
