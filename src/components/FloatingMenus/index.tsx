@@ -4,8 +4,9 @@
  */
 
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { PlusCircle, Paperclip, Camera, Image as ImageIcon } from 'lucide-react-native';
+import ActionBadge from '../ActionBadge';
 import { colors, typography, spacing, borderRadius } from '../../theme';
 
 interface FloatingMenusProps {
@@ -65,11 +66,18 @@ export default function FloatingMenus({
               ))}
             </View>
           </View>
-          <View style={styles.debugContent}>
+          <ScrollView style={styles.debugContent} contentContainerStyle={styles.debugContentContainer}>
             <Text style={styles.debugText}>
               Transcript text will appear here...
             </Text>
-          </View>
+            
+            {/* Action badges showcase */}
+            <View style={styles.badgeRow}>
+              <ActionBadge type="planning" size="small" />
+              <ActionBadge type="research" size="small" />
+              <ActionBadge type="coding" size="small" />
+            </View>
+          </ScrollView>
         </View>
       )}
     </>
@@ -158,11 +166,19 @@ const styles = StyleSheet.create({
   },
   debugContent: {
     flex: 1,
+  },
+  debugContentContainer: {
     padding: spacing.md,
+    gap: spacing.md,
   },
   debugText: {
     ...typography.mono,
     color: colors.text.secondary,
     fontSize: 11,
+  },
+  badgeRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: spacing.xs,
   },
 });
