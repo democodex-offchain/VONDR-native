@@ -76,7 +76,7 @@ export default function LeftMenuDrawer({
     // Toggle submenu: close if already open, open if closed
     const newActiveSubMenu = activeSubMenu === itemId ? null : itemId;
     setLocalActiveSubMenu(newActiveSubMenu);
-    onMenuItemPress?.(itemId);
+    // Don't navigate to full page - just toggle sub-menu
   };
 
   // Animate drawer open/close
