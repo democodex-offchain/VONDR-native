@@ -163,6 +163,8 @@ export default function BrandPage({ onClose }: BrandPageProps) {
 const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
+    flex: 1, // CRITICAL: Required for ScrollView height calculation. Without this,
+             // ScrollView thinks it has infinite space and won't enable scrolling.
     backgroundColor: colors.background,
     zIndex: 100, // Above all menus and panels
   },
@@ -170,7 +172,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: spacing.lg,
-    paddingTop: spacing.sm,
+    paddingTop: spacing.xl,
     paddingBottom: spacing.md,
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(255, 255, 255, 0.05)',
@@ -196,7 +198,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.lg,
     paddingTop: spacing.sm,
     paddingBottom: spacing.xl * 2,
-    flexGrow: 1,
   },
   section: {
     marginBottom: spacing.xl * 2,

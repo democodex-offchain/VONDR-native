@@ -261,7 +261,7 @@ const styles = StyleSheet.create({
     borderBottomColor: 'rgba(255, 255, 255, 0.05)',
     backgroundColor: 'rgba(24, 24, 27, 0.5)', // zinc-900 with 50% opacity
     paddingHorizontal: spacing.lg,
-    paddingTop: spacing.sm,
+    paddingTop: spacing.xl,
     paddingBottom: spacing.md,
   },
   headerContent: {
